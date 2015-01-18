@@ -1,0 +1,12 @@
+<plugin>
+    <name>Whiteboard Plugin</name>
+    <version>0.0.7</version>
+    <author>Version 2 Software, LLC</author>
+    <homePage>http://www.version2software.com</homePage>
+    <email>sales@version2software.com</email>
+    <description>Adds whiteboarding capability to Spark.</description>
+    <class>com.version2software.sparkplug.whiteboard.WhiteboardPlugin</class>
+    <minSparkVersion>2.6.0</minSparkVersion>
+    <os>Windows,Linux,Mac</os>
+    <java>1.6.0_00</java>
+</plugin>

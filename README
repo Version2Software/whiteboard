@@ -1,0 +1,3 @@
+Before running ant in the build directory, you will need to define the
+location of your junit.jar in the build.properties file in the build directory.
+

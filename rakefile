@@ -1,0 +1,30 @@
+#
+# This file is for convenience only, and only works if you have ruby/rake installed.
+# It is not critical to building the plugin.
+#
+
+require 'fileutils'
+include FileUtils
+
+task :default => [:all]
+
+desc 'Build'
+task :build do
+  Dir.chdir('build') {p `ant`}
+end
+
+desc 'Deploy'
+task :deploy do
+  cp "whiteboard.jar", "../spark/plugins/whiteboard.jar"
+   
+  remove_dir '../spark/plugins/whiteboard' if File.exist? '../spark/plugins/whiteboard'
+end
+
+desc 'Run'
+task :run do
+  Dir.chdir('../spark/bin') {`spark.bat`}
+end
+
+desc 'All (Build, Deploy, and Run)'
+task :all => [:build, :deploy, :run] do
+end

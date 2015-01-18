@@ -1,0 +1,109 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+<head>
+<title>Whiteboard Plugin Changelog</title>
+<style type="text/css">
+   BODY {
+      font-size : 100%;
+   }
+
+   BODY, TD, TH {
+      font-family : tahoma, verdana, arial, helvetica, sans-serif;
+      font-size : 0.8em;
+   }
+   
+   H2 {
+      font-size : 10pt;
+      font-weight : bold;
+      padding-left : 1em;
+   }
+
+   A:hover {
+      text-decoration : none;
+   }
+   
+   H1 {
+      font-family : tahoma, arial, helvetica, sans-serif;
+      font-size : 1.4em;
+      font-weight: bold;
+      border-bottom : 1px #ccc solid;
+      padding-bottom : 2px;
+   }
+      
+   TT {
+      font-family : courier new;
+      font-weight : bold;
+      color : #060;
+   }
+
+   PRE {
+      font-family : courier new;
+      font-size : 100%;
+   }
+</style>
+</head>
+<body>
+
+<h1>Whiteboard Plugin Changelog</h1>
+<p><b>0.0.7</b> -- August 25, 2011</p>
+<ul>
+   <li>Updated to work with Spark 2.6.x</li>
+</ul>
+
+<p><b>0.0.6</b> -- September 15, 2009</p>
+<ul>
+   <li>Reworked the copy and paste functionality to use the OS clipboard. This adds the ability to paste text and images directly into the whiteboard.</li>
+   <li>Added the ability to create multi-line text shapes.</li>
+   <li>Implemented undo functionality.</li>
+   <li>Send forward/back can change display order one position at a time.</li>
+</ul>
+
+<p><b>0.0.5</b> -- November 21, 2008</p>
+<ul>
+   <li>Fixed an issue where multiple invites would be sent out.</li>
+   <li>Fixed an issue where where an NullPointerException could occur when removing the PacketListeners.</li> 
+</ul>
+
+<p><b>0.0.4</b> -- October 11, 2007</p>
+<ul>
+   <li>Issue 8: Provide users with an opportunity to save a whiteboard prior to closing an existing whiteboard or creating a new one.</li>
+   <li>Added a invitation layer when starting a new one-on-one whiteboard session.</li>
+   <li>Added a notification layer to alert whiteboard session participants when a new whiteboard is created or an existing one is closed.</li>
+   <li>Reworked the property dialog so that a shape's color and opacity can be set in one place and are updated on-the-fly.</li>
+   <li>Issue 26 and 14: Give ability to alter/resize a shape by dragging a selection handle.</li>
+   <li>Issue 24: Support more graphic file types, depending on what the OS can support.</li>
+   <li>Issue 17: Optionally track world and screen coordinates in the status bar as mouse is moved.</li>
+   <li>Issue 9: Add the ability to export document as an image.</li>   
+</ul>
+
+<p><b>0.0.3</b> -- June 15, 2007</p>
+<ul>
+   <li>Changed Whiteboard.java to extend JFrame rather than JDialog so that window minimize and maximize buttons would be available.</li>
+   <li>Added the ability to change the order of shapes (Send to Back/Bring to Front).</li>
+   <li>Added an automatic check on startup to see if a new version of the plugin is available.</li>
+   <li>Added Help menu item.</li>
+   <li>Added a "run-standalone" target to the ant build.xml file.</li>
+   <li>Improved the way "selected" elements are displayed.</li>
+   <li>Implemented ability to pan by dragging the screen.</li>
+   <li>Simplified world-to-screen transformation.</li>
+</ul>
+
+<p><b>0.0.2</b> -- April 18, 2007</p>
+<ul>
+   <li>Set the minimum version of Spark to 2.5.0.</li>
+   <li>Improved the UI so the toolbar buttons remain a fixed size regardless of the drawing canvas size.</li>
+   <li>Added preliminary support for working on a whiteboard with a group.</li>
+   <li>Added the ability to copy and paste shapes.</li>
+   <li>Added context sensitive right-click button pop menu.</li>
+   <li>Added a deploy target to the ant build file.</li>
+   <li>Added a changelog.html file.</li>
+</ul>
+
+<p><b>1.0.0 - Alpha</b> -- March 13, 2007</p>
+<ul>
+   <li>Initial release.</li>
+</ul>
+
+</body>
+</html>

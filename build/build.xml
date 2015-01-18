@@ -1,0 +1,140 @@
+<project name="whiteboardsparkplug" default="jar" basedir="..">
+
+    <property file="${basedir}/build/build.properties"/>
+    <property name="junit.dir" value="${junit}"/>
+
+    <property name="jarname" value="whiteboard.jar"/>
+
+    <property name="plug.dir" value="${basedir}/."/>
+    <property name="plug.lib.dir" value="${plug.dir}/lib"/>
+
+    <property name="classes.dir" value="${basedir}/build/classes"/>
+    <property name="src.dir" value="${plug.dir}/src"/>
+    <property name="test.dir" value="${plug.dir}/test"/>
+    <property name="target.dir" value="${plug.dir}/target"/>
+    <property name="target.lib.dir" value="${plug.dir}/target/lib"/>
+    <property name="jar.file" value="${target.dir}/lib/plugin-classes.jar"/>
+
+    <property name="spark.home" value="${plug.dir}/../spark" />
+    <property name="spark.lib" value="${plug.dir}/../../target/build/lib"/>
+
+    <path id="lib.classpath">
+        <fileset dir="${plug.lib.dir}" includes="**/*.jar, **/*.zip"/>
+        <fileset dir="${spark.lib}" includes="**/*.jar, **/*.zip"/>
+        <fileset dir="${spark.lib}/windows" includes="**/*.jar" />
+
+        <fileset dir="${junit.dir}/" includes="**/*.jar" />
+    </path>
+
+    <target name="clean" description="Cleans all build related output">
+        <delete file="${jar.file}"/>
+        <delete dir="${classes.dir}"/>
+        <delete dir="${target.dir}"/>
+    </target>
+
+    <target name="compile" description="Compiles plugin source">
+        
+        <echo message="${spark.lib}"/>
+        
+        <mkdir dir="${classes.dir}"/>
+        <javac srcdir="${src.dir}"
+               destdir="${classes.dir}"
+               classpathref="lib.classpath"
+               source="1.6"
+               debug="true"
+               target="1.6"/>
+
+        <javac srcdir="${test.dir}"
+                destdir="${classes.dir}"
+                classpathref="lib.classpath"
+                debug="true"/>
+                
+        <copy todir="${classes.dir}">
+            <fileset dir="${src.dir}" includes="**/*.png"/>
+            <fileset dir="${src.dir}" includes="**/*.gif"/>
+            <fileset dir="${src.dir}" includes="**/*.jpg"/>
+            <fileset dir="${src.dir}" includes="**/*.jpeg"/>
+           
+            <fileset dir="${test.dir}" includes="test.jpg"/>
+        </copy>
+    </target>
+
+   <target name="jar" depends="clean,compile" description="Makes a plugin jar">
+       <mkdir dir="${target.dir}" />
+       <mkdir dir="${target.lib.dir}"/>
+
+       <copy todir="${target.lib.dir}">
+           <fileset file="${plug.lib.dir}/lib" includes="**/*"/>
+       </copy>
+
+       <copy todir="${target.dir}">
+           <fileset file="${plug.dir}/plugin.xml"/>
+       </copy>
+
+       <copy tofile="${target.dir}/lgpl.txt">
+           <fileset file="${plug.dir}/lgpl.txt"/>
+       </copy>
+
+       <jar basedir="${classes.dir}" file="${jar.file}" update="false"/>
+
+       <zip zipfile="${plug.dir}/${jarname}" basedir="${target.dir}" />
+   </target>
+
+   <target name="test" depends="compile">
+       <junit fork="yes" haltonfailure="yes" haltonerror="yes">
+           <classpath>
+               <fileset dir="${spark.lib}" includes="**/*.jar, **/*.zip"/>
+               <fileset dir="${plug.lib.dir}" includes="**/*.jar, **/*.zip"/>
+               <pathelement location="${junit.dir}/junit.jar" />
+               <pathelement location="${classes.dir}" />
+           </classpath>
+
+           <formatter type="plain" usefile="false" />
+           
+           <batchtest>
+               <fileset dir="${test.dir}">
+                   <include name="**/Test*.java" />
+               </fileset>
+           </batchtest>
+       </junit>
+   </target>
+   
+   <target name="run" depends="jar" description="Makes a plugin jar and starts Spark with that plugin">
+       <copy todir="${basedir}/../spark/plugins"
+           file="${plug.dir}/${jarname}" />
+
+       <property name="sparklib" value="${basedir}/../lib" />
+       <java fork="true" classname="org.jivesoftware.launcher.Startup" dir="${basedir}/../../target/build/bin">
+           <classpath>
+               <fileset dir="${sparklib}">
+                   <include name="**/*.jar" />
+                   <include name="**/*.exe" />
+                   <include name="**/*.dll" />
+               </fileset>
+               <pathelement location="${basedir}/../spark/resources" />
+               <fileset dir="${spark.lib}" includes="**/*.jar, **/*.zip"/>
+           
+               <!-- for OSX
+               <pathelement location="/System/Library/Java" />
+               -->
+           </classpath>
+           <jvmarg value="-Dappdir=${basedir}/../spark" />
+       </java>
+   </target>
+   
+   <target name="run-standalone" depends="compile" description="Runs the whiteboard without starting up Spark">
+       <java fork="true" classname="com.version2software.sparkplug.whiteboard.view.Whiteboard">
+           <classpath>
+               <pathelement path="${classes.dir}"/>
+               
+               <fileset dir="${plug.lib.dir}">
+                   <include name="**/*.jar" />
+               </fileset>
+               
+               <fileset dir="${spark.lib}">
+                   <include name="**/*.jar" />
+               </fileset>
+           </classpath>
+       </java>
+   </target>
+</project>
